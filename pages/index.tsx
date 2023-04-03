@@ -67,6 +67,9 @@ const Home: React.FC<HomeProps> = ({
 
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
 
+
+  const [inviteCode, setInviteCode] = useState<string>('');
+
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [showPromptbar, setShowPromptbar] = useState<boolean>(true);
 
