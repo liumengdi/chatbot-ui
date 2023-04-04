@@ -28,6 +28,11 @@
   height: 6px;
 }
 
+.mui-button-contained-primary {
+  background-color: #1976d2 !important;
+  color: #fff !important;
+}
+
 html {
   background: #f0f0f0;
 }
