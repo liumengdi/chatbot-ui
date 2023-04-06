@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { inviteCode } = req.body;
     if (!inviteCode) {
-      return res.status(400).json({ message: 'invite code required' });
+      return res.status(401).json({ message: 'invite code required' });
     }
     // Connect to the database
     await dbConnect();
@@ -15,11 +15,16 @@ export default async function handler(req, res) {
 
     console.log('code From database', code);
     if (!code) {
-      return res.status(400).json({ message: '无效的验证码' });
+      return res.status(401).json({ message: '无效的邀请码' });
     }
-    if (code.isUsed) {
-      return res.status(400).json({ message: '验证码已被使用' });
-    }
+    // TODO: 需要恢复
+    // if (code.isUsed) {
+    //   return res.status(401).json({ message: '邀请码已被使用' });
+    // }
+
+    // if (code.isValidate === false) {
+    //   return res.status(401).json({ message: '此邀请码已被销毁' });
+    // }
 
     const currentDate = new Date();
     await InviteCode.updateOne({ code: inviteCode }, { isUsed: true, usedAt: currentDate });

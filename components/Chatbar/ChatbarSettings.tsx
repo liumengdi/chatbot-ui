@@ -35,16 +35,16 @@ export const ChatbarSettings: FC<Props> = ({
         <ClearConversations onClearConversations={onClearConversations} />
       ) : null}
 
-      <Import onImport={onImportConversations} />
+      {/* <Import onImport={onImportConversations} /> */}
 
       <SidebarButton
-        text={t('Export data')}
+        text={'导出'}
         icon={<IconFileExport size={18} />}
         onClick={() => onExportConversations()}
       />
 
       <SidebarButton
-        text={lightMode === 'light' ? t('Dark mode') : t('Light mode')}
+        text={lightMode === 'light' ? '暗黑模式' : '亮色模式'}
         icon={
           lightMode === 'light' ? <IconMoon size={18} /> : <IconSun size={18} />
         }
@@ -53,7 +53,7 @@ export const ChatbarSettings: FC<Props> = ({
         }
       />
 
-      <Key apiKey={apiKey} onApiKeyChange={onApiKeyChange} />
+      {/* <Key apiKey={apiKey} onApiKeyChange={onApiKeyChange} /> */}
     </div>
   );
 };

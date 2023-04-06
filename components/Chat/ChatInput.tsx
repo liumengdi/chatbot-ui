@@ -59,15 +59,9 @@ export const ChatInput: FC<Props> = ({
     const maxLength = model.maxLength;
 
     if (value.length > maxLength) {
-      alert(
-        t(
-          `Message limit is {{maxLength}} characters. You have entered {{valueLength}} characters.`,
-          { maxLength, valueLength: value.length },
-        ),
-      );
+      alert(`消息字数限制为 ${maxLength} 个字符。您已输入 ${valueLength} 个字符。`);
       return;
     }
-
     setContent(value);
     updatePromptListVisibility(value);
   };
@@ -78,10 +72,8 @@ export const ChatInput: FC<Props> = ({
     }
 
     if (!content) {
-      alert(t('Please enter a message'));
       return;
     }
-
     onSend({ role: 'user', content });
     setContent('');
 
@@ -311,20 +303,6 @@ export const ChatInput: FC<Props> = ({
             />
           )}
         </div>
-      </div>
-      <div className="px-3 pt-2 pb-3 text-center text-[12px] text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
-        <a
-          href="https://github.com/mckaywrigley/chatbot-ui"
-          target="_blank"
-          rel="noreferrer"
-          className="underline"
-        >
-          ChatBot UI
-        </a>
-        .{' '}
-        {t(
-          "Chatbot UI is an advanced chatbot kit for OpenAI's chat models aiming to mimic ChatGPT's interface and functionality.",
-        )}
       </div>
     </div>
   );

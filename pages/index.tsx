@@ -109,6 +109,7 @@ const Home: React.FC<HomeProps> = ({
         messages: updatedConversation.messages,
         key: apiKey,
         prompt: updatedConversation.prompt,
+        inviteCode: localStorage.getItem('inviteCode'),
       };
 
       const controller = new AbortController();
@@ -124,6 +125,10 @@ const Home: React.FC<HomeProps> = ({
       if (!response.ok) {
         setLoading(false);
         setMessageIsStreaming(false);
+        if (response.status === 401) {
+          localStorage.removeItem('inviteCode');
+          return toast.error('邀请码无效或已过期');
+        }
         toast.error(response.statusText);
         return;
       }
@@ -762,7 +767,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     props: {
       serverSideApiKeyIsSet: !!process.env.OPENAI_API_KEY,
       defaultModelId,
-      ...(await serverSideTranslations(locale ?? 'zh', [
+      ...(await serverSideTranslations('zh', [
         'common',
         'chat',
         'sidebar',

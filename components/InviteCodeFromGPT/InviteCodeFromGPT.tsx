@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 const InviteCode = ({ onValidCode }) => {
   const [inviteCode, setInviteCode] = useState('');
   const [isValid, setIsValid] = useState(true);
+  const [invalidMsg, setInvalidMsg] = useState('无效的邀请码');
 
 
   const handleSubmit = async (e) => {
@@ -19,7 +20,7 @@ const InviteCode = ({ onValidCode }) => {
     }
 
     try {
-      const response = await fetch('/api/inviteCode', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,6 +35,8 @@ const InviteCode = ({ onValidCode }) => {
         // Handle error
         const errorData = await response.json();
         console.log(errorData.message);
+        setIsValid(false);
+        setInvalidMsg(errorData.message);
       }
     } catch (error) {
       // Handle error
@@ -66,10 +69,13 @@ const InviteCode = ({ onValidCode }) => {
         >
           <TextField
             error={!isValid}
-            helperText={!isValid ? '邀请码无效' : ''}
+            helperText={!isValid ? invalidMsg : ''}
             label="邀请码"
             value={inviteCode}
-            onChange={(e) => setInviteCode(e.target.value)}
+            onChange={(e) => {
+              setInviteCode(e.target.value);
+              setIsValid(true);
+            }}
             required
             sx={{ flexGrow: 1 }}
             InputProps={{

@@ -1,5 +1,6 @@
 // utils/server/db/dbConnect.js
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
+import { connect } from 'mongoose';
 
 const connection = {};
 
@@ -7,8 +8,10 @@ async function dbConnect() {
   if (connection.isConnected) {
     return;
   }
-
-  const db = await mongoose.connect(process.env.MONGODB_URI, {
+  console.log("Connecting to MongoDB...");
+  console.log("MongoDB URI:", process.env.MONGODB_URI);
+  
+  const db = await connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });

@@ -20,17 +20,21 @@ const theme = createTheme({
 function App({ Component, pageProps }: AppProps) {
   const [inviteCode, setInviteCode] = useState('');
 
-  // watch local storage for invite code
   useEffect(() => {
     const inviteCode = localStorage.getItem('inviteCode');
     if (inviteCode) {
       setInviteCode(inviteCode);
     }
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'inviteCode') {
+        console.log('inviteCode changed', e.newValue);
+        setInviteCode(e.newValue);
+      }
+    });
   }, []);
 
   const handleSubmit = (code: string) => {
     setInviteCode(code);
-    console.log('code', code);
     localStorage.setItem('inviteCode', code);
   };
 
